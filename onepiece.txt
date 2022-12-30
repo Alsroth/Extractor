@@ -1,0 +1,19 @@
+ep04.mp4:
+  92  Dialogue: 0,0:04:59.59,0:05:01.09,Default,,0000,0000,0000,,Shanks!
+  93: Dialogue: 0,0:05:06.23,0:05:08.90,Default,,0000,0000,0000,,This straw hat is dear to me--
+  93: Dialogue: 0,0:05:06.23,0:05:08.90,Default,,0000,0000,0000,,This straw hat is dear to me--
+  94  Dialogue: 0,0:05:08.90,0:05:11.90,Default,,0000,0000,0000,,it's been with me through many a fight.
+ep05.mp4:
+  125  Dialogue: 0,0:06:52.60,0:06:54.57,Default,,0000,0000,0000,,So you're a pirate?
+  126: Dialogue: 0,0:06:54.57,0:06:58.84,Default,,0000,0000,0000,,Yeah. I swore to the person\Nwho gave me this straw hat...
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+ep06.mp4:
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  127  Dialogue: 0,0:06:58.84,0:07:02.18,Default,,0000,0000,0000,,that I'd gather a crew\Nand become a pirate!
+  126: Dialogue: 0,0:06:54.57,0:06:58.84,Default,,0000,0000,0000,,Yeah. I swore to the person\Nwho gave me this straw hat...
