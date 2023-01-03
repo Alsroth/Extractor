@@ -1,9 +1,6 @@
 package helper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class FileHelper {
     
@@ -29,6 +26,16 @@ public class FileHelper {
         }
 
         return text;
+    }
+
+    public static void createOrReplaceExistingFile(String fileName, String content) {
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            fw.write(content);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

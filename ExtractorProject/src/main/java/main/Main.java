@@ -1,6 +1,7 @@
 package main;
 
 import helper.FileHelper;
+import model.Settings;
 import model.Sequences;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         // Je récupére le contenu du fichier dans une chaine de caractères
-        String textFile = FileHelper.transformFileIntoString("D:/Data/Projets/Dev/Extractor/onepiece.txt");
+        String textFile = FileHelper.transformFileIntoString(Settings.extractedData);
         // Je découpe la chaine par épisode.
         String[] fileSplitByEpisode = textFile.split("(?=ep\\d+\\.mp4:)");
 
@@ -29,5 +30,6 @@ public class Main {
         }
 
         sequences.cutAll(false);
+        sequences.concatAllOutPutFile();
     }
 }
