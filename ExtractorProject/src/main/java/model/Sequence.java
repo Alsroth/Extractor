@@ -11,14 +11,11 @@ public class Sequence {
     String fileName;
     Duration startSequence;
     Duration endSequence;
-    Duration duration;
 
     public Sequence(String fileName, String startSequence, String endSequence) {
         this.fileName = fileName;
         this.startSequence = new Duration(startSequence);
         this.endSequence = new Duration(endSequence);
-        this.duration = this.endSequence.minus(this.startSequence);
-
     }
 
     public void cut(String outputTag, String extension, boolean showOutput)  throws IOException {
@@ -28,6 +25,12 @@ public class Sequence {
                         , "-to", endSequence.toString() , "-i", fileName, "-c", "copy", fileNameWithoutExtension + outputTag + extension)
                 ,false);
         History.createdOutPutFiles.add(fileNameWithoutExtension + outputTag + extension);
+    }
+
+    public void shift(Double second) {
+        startSequence.plus(new Duration(0,0,second));
+        endSequence.plus(new Duration(0,0,second));
+
     }
 
     @Override

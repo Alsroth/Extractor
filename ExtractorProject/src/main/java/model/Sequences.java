@@ -47,10 +47,10 @@ public class Sequences {
         }
     }
 
-    public void delayAll(Double second) {
+    public void shiftAll(Double second) {
         for(Sequence s: sequences) {
-            s.startSequence.delay(second);
-            s.endSequence.delay(second);
+            s.shift(second);
+            s.shift(second);
         }
     }
 
