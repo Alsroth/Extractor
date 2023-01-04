@@ -47,6 +47,13 @@ public class Sequences {
         }
     }
 
+    public void delayAll(Double second) {
+        for(Sequence s: sequences) {
+            s.startSequence.delay(second);
+            s.endSequence.delay(second);
+        }
+    }
+
     public void concatAllOutPutFile() throws IOException {
         StringBuilder content = new StringBuilder();
         for(String fileName : History.createdOutPutFiles) {

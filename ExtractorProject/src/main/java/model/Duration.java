@@ -5,37 +5,24 @@ import lombok.Getter;
 @Getter
 public class Duration {
 
-    private final int hour;
+    private int hour;
     private int minute;
-    private Double seconde = 0.0;
+    private Double second = 0.0;
 
-    Duration(int hour,int minute, Double seconde) {
+    Duration(int hour,int minute, Double second) {
         this.hour = hour;
         this.minute = minute;
-        this.seconde = seconde;
-        if ((seconde + 16) > 60) {
-            this.minute += 1;
-            this.seconde += ((seconde + 16) - 60);
-        } else {
-            this.seconde += 16;
-        }
-
+        this.second = second;
     }
     Duration(String duration) {
-        String[] hourMinuteSeconde =  duration.split(":");
-        hour = Integer.parseInt(hourMinuteSeconde[0]);
-        minute = Integer.parseInt(hourMinuteSeconde[1]);
-        seconde = Double.parseDouble(hourMinuteSeconde[2]);
-        if ((seconde + 16.5) > 60) {
-            this.minute += 1;
-            this.seconde = ((seconde + 16.5) - 60);
-        } else {
-            this.seconde += 16.5;
-        }
+        String[] hourMinuteSecond =  duration.split(":");
+        hour = Integer.parseInt(hourMinuteSecond[0]);
+        minute = Integer.parseInt(hourMinuteSecond[1]);
+        second = Double.parseDouble(hourMinuteSecond[2]);
     }
 
     public Duration minus(Duration d) {
-        return new Duration(hour - d.getHour(), minute - d.getMinute(), seconde - d.getSeconde());
+        return new Duration(hour - d.getHour(), minute - d.getMinute(), second - d.getSecond());
     }
 
     private String twoDigitNumber(Number n)  {
@@ -45,8 +32,23 @@ public class Duration {
         return "" +  n;
     }
 
+    public void delay(Double secondToDelay) {
+        if ((second + secondToDelay) > 60 && minute < 59) {
+            minute += 1;
+            second = ((second + 16.5) - 60);
+        }
+        else if((second + secondToDelay) > 60 && minute == 59) {
+            hour += 1;
+            minute = 0;
+            second = ((second + 16.5) - 60);
+        }
+        else {
+            second += 16.5;
+        }
+    }
+
     @Override
     public String toString() {
-        return twoDigitNumber(hour) + ":" + twoDigitNumber(minute) + ":" + twoDigitNumber(seconde);
+        return twoDigitNumber(hour) + ":" + twoDigitNumber(minute) + ":" + twoDigitNumber(second);
     }
 }
