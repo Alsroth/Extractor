@@ -19,7 +19,7 @@ public class Main {
         String[] fileSplitByEpisode = textFile.split("(?=ep\\d+\\.mp4:)");
 
 
-        Pattern pattern = Pattern.compile("(.*straw hat.*)|(.*ep\\d+\\.mp4:.*)");
+        Pattern pattern = Pattern.compile("(.*"+ Settings.keyWord + ".*)|(.*" + Settings.prefixVideo +"\\d+\\." + Settings.extensionOfOrigineVideo +":.*)", Pattern.CASE_INSENSITIVE);
         Sequences sequences = new Sequences(new ArrayList<>());
         for (String s : fileSplitByEpisode) {
             // Je découpe ligne par ligne.
