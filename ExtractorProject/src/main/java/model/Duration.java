@@ -2,6 +2,8 @@ package model;
 
 import lombok.Getter;
 
+import javax.naming.Context;
+
 @Getter
 public class Duration {
 
@@ -9,7 +11,7 @@ public class Duration {
     private int minute;
     private Double second;
 
-    Duration(int hour,int minute, Double second) {
+    public Duration(int hour, int minute, Double second) {
         this.hour = hour;
         this.minute = minute;
         this.second = second;
@@ -28,11 +30,42 @@ public class Duration {
         return "" +  n;
     }
 
+    public void minus(Duration d) {
+        this.soustractHour(d.getHour());
+        this.soustractMinute(d.getMinute());
+        this.soustractSecond(d.getSecond());
+    }
+
+    private void soustractHour(int hourToSoustract) {
+        if ((hour - hourToSoustract) < 0) {
+            System.err.println("La soustraction des heures ne peux pas être négatif");
+        } else {
+            hour -= hourToSoustract;
+        }
+    }
+
+    private void soustractMinute(int minuteToSoustract) {
+        if ((minute - minuteToSoustract) < 0) {
+            soustractHour(1);
+            minute = Math.abs(minute - minuteToSoustract);
+        } else {
+            minute -= minuteToSoustract;
+        }
+    }
+
+    private void soustractSecond(double secondToSoustract) {
+        if ((second - secondToSoustract) < 0) {
+            soustractMinute(1);
+            second = Math.abs(second  - secondToSoustract);
+        } else {
+            second -= secondToSoustract;
+        }
+    }
+
     public void plus(Duration d) {
-       Duration result = new Duration(0,0,0.0);
-       result.addHour(d.getHour());
-       result.addMinute(d.getMinute());
-       result.addSecond(d.getSecond());
+       this.addHour(d.getHour());
+       this.addMinute(d.getMinute());
+       this.addSecond(d.getSecond());
     }
 
     private void addHour(int hourToAdd) {

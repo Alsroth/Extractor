@@ -16,6 +16,7 @@ public class  Main {
     public static void main(String[] args) throws IOException {
         Sequences sequences = new Sequences(new ArrayList<>());
         sequences.initFromTextFile();
+        sequences.setAmplitude(new Duration(0,0, 30.0));
         //sequences.shiftAll(16.0);
         sequences.cutAll(false);
         // sequences.concatAllOutPutFile();

@@ -64,6 +64,10 @@ public class Sequences {
         }
     }
 
+    public void setAmplitude(Duration d) {
+        for(Sequence s: sequences) {
+            s.startSequence.plus(d);
+            s.endSequence.minus(d);
         }
     }
 
