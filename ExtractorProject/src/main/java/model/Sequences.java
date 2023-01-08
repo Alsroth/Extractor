@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,13 +17,27 @@ public class Sequences {
 
     List<Sequence> sequences;
 
+    public void initFromTextFile() {
+        // Je récupére le contenu du fichier dans une chaine de caractères
+        String textFile = FileHelper.transformFileIntoString(Settings.extractedData);
+        // Je découpe la chaine par épisode.
+        String[] fileSplitByEpisode = textFile.split("(?=ep\\d+\\.mp4:)");
+        Pattern pattern = Pattern.compile("(.*"+ Settings.keyWord + ".*)|(.*" + Settings.prefixVideo +"\\d+\\." + Settings.extensionOfOrigineVideo +":.*)", Pattern.CASE_INSENSITIVE);
+        for (String s : fileSplitByEpisode) {
+            // Je découpe ligne par ligne.
+            String[] episodeSplitByLine = s.split("\n");
+            // Je garde uniquement les lignes qui correspondent à mon expression régulière.
+            episodeSplitByLine = Arrays.stream(episodeSplitByLine).filter(text -> pattern.matcher(text).matches()).toArray(String[]::new);
+            addSequences(episodeSplitByLine);
+        }
+    }
+
     /**
      * It take a specify type of entry and make it into a list of sequence.
      * @param episodeSplitByLine one line with the episode and the other with timer and subtitle.
      * @return list of sequence
      */
-    public void addSequences(String[] episodeSplitByLine) {
-        List<Sequence> sequences = new ArrayList<>();
+    private void addSequences(String[] episodeSplitByLine) {
         String title = episodeSplitByLine[0].split(":")[0];
         Pattern patternEndStartSequence = Pattern.compile("\\d:\\d{2}:\\d{2}\\.\\d{2},\\d:\\d{2}:\\d{2}\\.\\d{2}");
         for (String line : episodeSplitByLine) {
@@ -34,13 +48,10 @@ public class Sequences {
                 sequences.add(new Sequence(title,timer[0],timer[1]));
             }
         }
-
-        this.sequences.addAll(sequences);
     }
 
     public void cutAll(Boolean showOutput) throws IOException {
         int compteur = 0;
-        System.out.println(sequences);
         for(Sequence s : sequences) {
             s.cut("_edit" + compteur,".mp4",showOutput);
             compteur++;
@@ -50,7 +61,9 @@ public class Sequences {
     public void shiftAll(Double second) {
         for(Sequence s: sequences) {
             s.shift(second);
-            s.shift(second);
+        }
+    }
+
         }
     }
 
