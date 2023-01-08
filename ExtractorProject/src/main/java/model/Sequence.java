@@ -18,12 +18,12 @@ public class Sequence {
         this.endSequence = new Duration(endSequence);
     }
 
-    public void cut(String outputTag, String extension, boolean showOutput)  throws IOException {
+    public void cut(String outputTag, String extension, boolean showOutput) {
         int indexOfDot = fileName.lastIndexOf('.');
         String fileNameWithoutExtension = fileName.substring(0, indexOfDot);
         BuilderHelper.builderStart(new ProcessBuilder("cmd.exe", "/c", "ffmpeg", "-ss", startSequence.toString()
                         , "-to", endSequence.toString() , "-i", fileName, "-c", "copy", fileNameWithoutExtension + outputTag + extension)
-                ,false);
+                ,showOutput);
         History.createdOutPutFiles.add(fileNameWithoutExtension + outputTag + extension);
     }
 
