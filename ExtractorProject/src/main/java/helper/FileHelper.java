@@ -3,7 +3,9 @@ package helper;
 import java.io.*;
 
 public class FileHelper {
-    
+
+    private FileHelper() {}
+
     /**
      * @return the content of the file into a string
      */

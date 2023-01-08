@@ -9,7 +9,9 @@ import java.io.InputStreamReader;
 
 public class BuilderHelper {
 
-    public static void builderStart(ProcessBuilder builder,Boolean showOutput) throws IOException {
+    private BuilderHelper() {}
+
+    public static void builderStart(ProcessBuilder builder,boolean showOutput) throws IOException {
         builder.environment().put("Path", Settings.path);
         // Start the process and get the process object
         builder.directory(new File(Settings.directory));
