@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# IntelliJ IDEA
+/ExtractorProject/.idea/
+/ExtractorProject/target/
+
+# Spécifique au projet
+*.txt
+*.mp4
