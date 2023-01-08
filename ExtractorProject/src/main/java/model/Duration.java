@@ -38,7 +38,9 @@ public class Duration {
 
     private void soustractHour(int hourToSoustract) {
         if ((hour - hourToSoustract) < 0) {
-            System.err.println("La soustraction des heures ne peux pas être négatif");
+            hour = 0;
+            minute = 0;
+            second = 0.0;
         } else {
             hour -= hourToSoustract;
         }
