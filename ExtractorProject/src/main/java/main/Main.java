@@ -8,6 +8,8 @@ import model.Sequences;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 public class  Main {
@@ -17,8 +19,8 @@ public class  Main {
         long debut = System.currentTimeMillis();
         Sequences sequences = new Sequences(new ArrayList<>());
         sequences.initFromTextFile();
-        sequences.setAmplitude(new Duration(0,0, 20.0));
-        // sequences.shiftAll(16.0);
+        // sequences.setAmplitude(new Duration(0,0, 20.0));
+        sequences.shiftAll(16.0);
         sequences.cutAll(false);
         // sequences.concatAllOutPutFile();
 

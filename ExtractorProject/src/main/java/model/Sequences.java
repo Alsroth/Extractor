@@ -8,6 +8,8 @@ import lombok.Getter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,12 +52,21 @@ public class Sequences {
         }
     }
 
-    public void cutAll(Boolean showOutput) throws IOException {
+    public void cutAll(Boolean showOutput) {
         int compteur = 0;
+        ExecutorService executor = Executors.newFixedThreadPool(2);
         for(Sequence s : sequences) {
-            s.cut("_edit" + compteur,".mp4",showOutput);
+            int finalCompteur = compteur;
+            executor.execute(() -> {
+                try {
+                    s.cut("_edit" + finalCompteur,".mp4",showOutput);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             compteur++;
         }
+        executor.shutdown();
     }
 
     public void shiftAll(Double second) {
@@ -71,7 +82,7 @@ public class Sequences {
         }
     }
 
-    public void concatAllOutPutFile() throws IOException {
+    public void concatAllOutPutFile() throws IOException, InterruptedException {
         StringBuilder content = new StringBuilder();
         for(String fileName : History.createdOutPutFiles) {
             content.append("file \'").append(fileName).append("\'\n");
