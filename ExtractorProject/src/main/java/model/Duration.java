@@ -58,7 +58,7 @@ public class Duration {
     private void soustractSecond(double secondToSoustract) {
         if ((second - secondToSoustract) < 0) {
             soustractMinute(1);
-            second = Math.abs(second  - secondToSoustract);
+            second = 60 - Math.abs(second  - secondToSoustract);
         } else {
             second -= secondToSoustract;
         }
