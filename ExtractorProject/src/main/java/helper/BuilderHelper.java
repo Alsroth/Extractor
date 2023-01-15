@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class BuilderHelper {
 
@@ -19,10 +20,11 @@ public class BuilderHelper {
                 // Start the process and get the process object
                 builder.directory(new File(Settings.directory));
                 builder.redirectErrorStream(true);
-                Process process = null;
+                Process process;
                 try {
                     process = builder.start();
-                } catch (IOException e) {
+                    process.waitFor(5, TimeUnit.SECONDS);
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 

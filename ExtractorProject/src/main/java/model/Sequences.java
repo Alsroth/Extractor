@@ -54,7 +54,7 @@ public class Sequences {
 
     public void cutAll(Boolean showOutput) {
         int compteur = 0;
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(1);
         for(Sequence s : sequences) {
             int finalCompteur = compteur;
             executor.execute(() -> {
@@ -82,7 +82,7 @@ public class Sequences {
         }
     }
 
-    public void concatAllOutPutFile() throws IOException, InterruptedException {
+    public void concatAllOutPutFile() throws InterruptedException {
         StringBuilder content = new StringBuilder();
         for(String fileName : History.createdOutPutFiles) {
             content.append("file \'").append(fileName).append("\'\n");

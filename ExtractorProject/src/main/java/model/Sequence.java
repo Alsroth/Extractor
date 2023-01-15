@@ -23,8 +23,8 @@ public class Sequence {
     public void cut(String outputTag, String extension, boolean showOutput) throws InterruptedException {
         int indexOfDot = fileName.lastIndexOf('.');
         String fileNameWithoutExtension = fileName.substring(0, indexOfDot);
-        BuilderHelper.builderStart(new ProcessBuilder("cmd.exe", "/c", "ffmpeg", "-i",fileName,"-map","0","-c:v","libx264","-c:a"
-                        ,"aac","-ss", startSequence.toString()
+        BuilderHelper.builderStart(new ProcessBuilder("cmd.exe", "/c", "ffmpeg", "-i", fileName, "-map", "0", "-c:v", "libx264", "-c:a"
+                        , "aac", "-ss", startSequence.toString()
                         , "-to", endSequence.toString() , fileNameWithoutExtension + outputTag + extension)
                 ,showOutput);
         History.createdOutPutFiles.add(fileNameWithoutExtension + outputTag + extension);

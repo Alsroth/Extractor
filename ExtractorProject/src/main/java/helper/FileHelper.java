@@ -14,7 +14,7 @@ public class FileHelper {
         File file = new File(path);
         String text = null;
         // Open the file
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file), 1024 * 8)) {
             // Read the file line by line
             StringBuilder sb = new StringBuilder();
             String line;
@@ -26,7 +26,6 @@ public class FileHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return text;
     }
 

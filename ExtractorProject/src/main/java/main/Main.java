@@ -15,18 +15,12 @@ import java.util.regex.Pattern;
 public class  Main {
 
 
-    public static void main(String[] args) throws IOException {
-        long debut = System.currentTimeMillis();
+    public static void main(String[] args) throws InterruptedException {
         Sequences sequences = new Sequences(new ArrayList<>());
         sequences.initFromTextFile();
-        // sequences.setAmplitude(new Duration(0,0, 20.0));
-        sequences.shiftAll(16.0);
+        sequences.setAmplitude(new Duration(0,0, 20.0));
+        // sequences.shiftAll(16.0);
         sequences.cutAll(false);
         // sequences.concatAllOutPutFile();
-
-        long fin = System.currentTimeMillis();
-        long tempsExecution = fin - debut;
-
-        System.out.println("Le code a mis " + tempsExecution + " millisecondes à s'exécuter.");
     }
 }
