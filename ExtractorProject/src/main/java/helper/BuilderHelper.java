@@ -23,7 +23,7 @@ public class BuilderHelper {
                 Process process;
                 try {
                     process = builder.start();
-                    process.waitFor(5, TimeUnit.SECONDS);
+                    process.waitFor(2, TimeUnit.SECONDS);
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
