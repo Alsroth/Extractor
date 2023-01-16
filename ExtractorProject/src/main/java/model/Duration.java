@@ -1,9 +1,11 @@
 package model;
 
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import javax.naming.Context;
 
+@Component
 @Getter
 public class Duration {
 

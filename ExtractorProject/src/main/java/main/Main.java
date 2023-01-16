@@ -1,17 +1,13 @@
 package main;
 
-import helper.FileHelper;
+
 import model.Duration;
-import model.Settings;
 import model.Sequences;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.regex.Pattern;
 
+@SpringBootApplication
 public class  Main {
 
 
@@ -22,5 +18,6 @@ public class  Main {
         // sequences.shiftAll(16.0);
         sequences.cutAll(false);
         // sequences.concatAllOutPutFile();
+
     }
 }

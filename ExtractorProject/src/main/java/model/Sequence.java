@@ -2,11 +2,13 @@ package model;
 
 import helper.BuilderHelper;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Component
 @Getter
 public class Sequence {
 

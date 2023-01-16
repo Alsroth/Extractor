@@ -1,15 +1,16 @@
 package helper;
 
 import model.Settings;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class BuilderHelper {
 
     private BuilderHelper() {}

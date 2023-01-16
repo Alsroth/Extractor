@@ -1,7 +1,11 @@
 package helper;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 
+@Component
 public class FileHelper {
 
     private FileHelper() {}

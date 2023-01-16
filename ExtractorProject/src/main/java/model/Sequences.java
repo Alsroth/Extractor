@@ -4,6 +4,7 @@ import helper.BuilderHelper;
 import helper.FileHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 @AllArgsConstructor
 @Getter
 public class Sequences {
