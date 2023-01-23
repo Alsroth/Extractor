@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,8 +18,12 @@ import java.util.regex.Pattern;
 @Getter
 public class Sequences {
 
-    List<Sequence> sequences;
+    List<Sequence> seqs;
 
+    /**
+     * Lis un fichier texte composé de ligne avec des titres d'episode suivi de leur sous-titre. Il est utilisé pour extraire
+     * l'ensemble des séquences par épisode correspondant à un mot clé retrouvé dans les sous-titres.
+     */
     public void initFromTextFile() {
         // Je récupére le contenu du fichier dans une chaine de caractères
         String textFile = FileHelper.transformFileIntoString(Settings.extractedData);
@@ -37,9 +40,9 @@ public class Sequences {
     }
 
     /**
-     * It take a specify type of entry and make it into a list of sequence.
-     * @param episodeSplitByLine one line with the episode and the other with timer and subtitle.
-     * @return list of sequence
+     * Prends un entée spécifique pour la convertir en séquences.
+     * @param episodeSplitByLine Tableau où chaque élement comporte une ligne avec le nom de l'episode suivi de lignes correspondant au sequences
+     *  à extraire.
      */
     private void addSequences(String[] episodeSplitByLine) {
         String title = episodeSplitByLine[0].split(":")[0];
@@ -49,42 +52,53 @@ public class Sequences {
             if (matcher.find()) {
                 String match = matcher.group();
                 String[] timer = match.split(",");
-                sequences.add(new Sequence(title,timer[0],timer[1]));
+                seqs.add(new Sequence(title,timer[0],timer[1]));
             }
         }
     }
 
+    /**
+     * Permet de couper l'ensemble des sequences.
+     * @param showOutput Affiche la sorties de la console des terminaux ouvert si à true.
+     */
     public void cutAll(Boolean showOutput) {
         int compteur = 0;
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        for(Sequence s : sequences) {
+        for(Sequence s : seqs) {
             int finalCompteur = compteur;
-            executor.execute(() -> {
-                try {
-                    s.cut("_edit" + finalCompteur,".mp4",showOutput);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            Thread thread = new Thread(() -> s.cut("_edit" + finalCompteur, ".mp4", showOutput));
+            executor.submit(thread);
             compteur++;
         }
         executor.shutdown();
     }
 
+    /**
+     * Décale la séquence d'un nombre donnée de seconde.
+     * @param second nombre de secondes correspondant au décalage du départ et de la fin de la séquence.
+     */
     public void shiftAll(Double second) {
-        for(Sequence s: sequences) {
+        for(Sequence s: seqs) {
             s.shift(second);
         }
     }
 
+    /**
+     * Ajoute une durée au début et à la fin d'une séquence comme ceci pour 30 min par exemple :
+     *  1:00:00 - 1:30:00 -> 00:30:00 - 2:00:00
+     * @param d Duration. La durée de lequel est étendu la séquence vers le haut et le bas.
+     */
     public void setAmplitude(Duration d) {
-        for(Sequence s: sequences) {
+        for(Sequence s: seqs) {
             s.startSequence.minus(d);
             s.endSequence.plus(d);
         }
     }
 
-    public void concatAllOutPutFile() throws InterruptedException {
+    /**
+     * Créer une vidéo contenant l'ensemble des vidéos découpée en une seul vidéo.
+     */
+    public void concatAllOutPutFile() {
         StringBuilder content = new StringBuilder();
         for(String fileName : History.createdOutPutFiles) {
             content.append("file \'").append(fileName).append("\'\n");

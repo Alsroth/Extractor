@@ -4,10 +4,6 @@ import helper.BuilderHelper;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 @Component
 @Getter
 public class Sequence {
@@ -22,7 +18,7 @@ public class Sequence {
         this.endSequence = new Duration(endSequence);
     }
 
-    public void cut(String outputTag, String extension, boolean showOutput) throws InterruptedException {
+    public void cut(String outputTag, String extension, boolean showOutput)  {
         int indexOfDot = fileName.lastIndexOf('.');
         String fileNameWithoutExtension = fileName.substring(0, indexOfDot);
         BuilderHelper.builderStart(new ProcessBuilder("cmd.exe", "/c", "ffmpeg", "-i", fileName, "-map", "0", "-c:v", "libx264", "-c:a"

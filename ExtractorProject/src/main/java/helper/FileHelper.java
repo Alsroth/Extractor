@@ -1,7 +1,6 @@
 package helper;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.*;
 
@@ -11,7 +10,8 @@ public class FileHelper {
     private FileHelper() {}
 
     /**
-     * @return the content of the file into a string
+     * @param path Chemin du fichier à convertir en String.
+     * @return Retourne le contenu d'un fichier texte en un objet String.
      */
     public static String transformFileIntoString(String path) {
         // Construct a File object with the desired file path
@@ -33,6 +33,10 @@ public class FileHelper {
         return text;
     }
 
+    /**
+     * @param fileName
+     * @param content
+     */
     public static void createOrReplaceExistingFile(String fileName, String content) {
         try {
             FileWriter fw = new FileWriter(fileName);
