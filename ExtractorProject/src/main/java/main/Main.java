@@ -11,13 +11,10 @@ import java.util.ArrayList;
 public class Main {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Sequences sequences = new Sequences(new ArrayList<>());
         sequences.initFromTextFile();
         sequences.setAmplitude(new Duration(0, 0, 20.0));
-        // sequences.shiftAll(16.0);
         sequences.cutAll(true);
-        // sequences.concatAllOutPutFile();
-
     }
 }
