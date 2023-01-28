@@ -7,9 +7,12 @@ import java.io.*;
 @Component
 public class FileHelper {
 
-    private FileHelper() {}
+    private FileHelper() {
+    }
 
     /**
+     * Permet de récupérer le contenu d'un fichier texte pour le transformer en une variable de chaine de caractères.
+     *
      * @param path Chemin du fichier à convertir en String.
      * @return Retourne le contenu d'un fichier texte en un objet String.
      */
@@ -34,8 +37,10 @@ public class FileHelper {
     }
 
     /**
-     * @param fileName
-     * @param content
+     * Créer ou remplace un fichier avec le contenu passé en paramètre.
+     *
+     * @param fileName Nom du fichier dans lequel écrire.
+     * @param content  Contenu à écrire dans le fichier.
      */
     public static void createOrReplaceExistingFile(String fileName, String content) {
         try {

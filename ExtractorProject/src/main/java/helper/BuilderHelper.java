@@ -14,6 +14,13 @@ public class BuilderHelper {
     private BuilderHelper() {
     }
 
+    /**
+     * Permet de lancer un processBuilder récupérer en paramètre et
+     * d'en afficher sa sortie optionnellement.
+     *
+     * @param builder    ProcessBuilder qui contient une commande à exécuter.
+     * @param showOutput Permet d'affiche la sortie du terminal ouvert.
+     */
     public static void builderStart(ProcessBuilder builder, boolean showOutput) {
         builder.environment().put("Path", Settings.path);
         // Start the process and get the process object
