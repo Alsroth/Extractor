@@ -18,10 +18,10 @@ import java.util.regex.Pattern;
 @Getter
 public class Sequences {
 
-    List<Sequence> seqs;
+    List<Sequence> trame;
 
     /**
-     * Lis un fichier texte composé de ligne avec des titres d'episode suivi de leur sous-titre. Il est utilisé pour extraire
+     * Lis un fichier texte composé de ligne avec des titres des episodes suivi de leur sous-titre. Il est utilisé pour extraire
      * l'ensemble des séquences par épisode correspondant à un mot clé retrouvé dans les sous-titres.
      */
     public void initFromTextFile() {
@@ -42,7 +42,7 @@ public class Sequences {
     /**
      * Prends une entrée spécifique pour la convertir en séquences.
      *
-     * @param episodeSplitByLine Tableau où chaque élement comporte une ligne avec le nom de l'episode suivi de lignes correspondant au sequences
+     * @param episodeSplitByLine Tableau où chaque elements comporte une ligne avec le nom des episodes suivi de lignes correspondant au sequences
      *                           à extraire.
      */
     private void addSequences(String[] episodeSplitByLine) {
@@ -53,7 +53,7 @@ public class Sequences {
             if (matcher.find()) {
                 String match = matcher.group();
                 String[] timer = match.split(",");
-                seqs.add(new Sequence(title, timer[0], timer[1]));
+                trame.add(new Sequence(title, timer[0], timer[1]));
             }
         }
     }
@@ -61,14 +61,14 @@ public class Sequences {
     /**
      * Permet de couper l'ensemble des sequences.
      *
-     * @param showOutput Affiche la sorties de la console des terminaux ouvert si à true.
+     * @param showOutput Affiche les sorties de la console des terminaux ouvert si à true.
      */
     public void cutAll(Boolean showOutput) {
         int compteur = 0;
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        for (Sequence s : seqs) {
+        for (Sequence s : trame) {
             int finalCompteur = compteur;
-            Thread thread = new Thread(() -> s.cut("_edit" + finalCompteur, ".mp4", showOutput));
+            Runnable thread = () -> s.cut("_edit" + finalCompteur, ".mp4", showOutput);
             executor.submit(thread);
             compteur++;
         }
@@ -76,12 +76,12 @@ public class Sequences {
     }
 
     /**
-     * Décale la séquence d'un nombre donnée de seconde.
+     * Décale la séquence d'un nombre donnée de secondes.
      *
-     * @param second nombre de secondes correspondant au décalage du départ et de la fin de la séquence.
+     * @param second nombre de secondes correspondantes au décalage du départ et de la fin de la séquence.
      */
     public void shiftAll(Double second) {
-        for (Sequence s : seqs) {
+        for (Sequence s : trame) {
             s.shift(second);
         }
     }
@@ -90,17 +90,17 @@ public class Sequences {
      * Ajoute une durée au début et à la fin d'une séquence comme ceci pour 30 min par exemple :
      * 1:00:00 - 1:30:00 -> 00:30:00 - 2:00:00
      *
-     * @param d Duration. La durée de lequel est étendu la séquence vers le haut et le bas.
+     * @param d Duration. La durée de laquelle est étendue la séquence vers le haut et le bas.
      */
     public void setAmplitude(Duration d) {
-        for (Sequence s : seqs) {
+        for (Sequence s : trame) {
             s.startSequence.minus(d);
             s.endSequence.plus(d);
         }
     }
 
     /**
-     * Créer une vidéo contenant l'ensemble des vidéos découpée en une seul vidéo.
+     * Créer une vidéo contenant l'ensemble des vidéos découpée en une seule vidéo.
      */
     public void concatAllOutPutFile() {
         StringBuilder content = new StringBuilder();

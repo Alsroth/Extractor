@@ -3,6 +3,8 @@ package model;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @Getter
 public class Duration {
@@ -54,14 +56,18 @@ public class Duration {
      * Permet de soustraire une heure à la durée.
      *
      * @param hourToSoustract heure à soustraire.
+     * @return retourne true si le résultat de la soustraction est positive.
+     * Autrement renvoi false avec la durée à 00:00:00.
      */
-    private void soustractHour(int hourToSoustract) {
+    private boolean soustractHour(int hourToSoustract) {
         if ((hour - hourToSoustract) < 0) {
             hour = 0;
             minute = 0;
             second = 0.0;
+            return false;
         } else {
             hour -= hourToSoustract;
+            return true;
         }
     }
 
@@ -69,14 +75,20 @@ public class Duration {
      * Permet de soustraire des minutes à la durée.
      *
      * @param minuteToSoustract minutes à soustraire.
+     * @return retourne true si le résultat de la soustraction est positive.
+     * Autrement renvoi false avec la durée à 00:00:00.
      */
-    private void soustractMinute(int minuteToSoustract) {
+    private boolean soustractMinute(int minuteToSoustract) {
         if ((minute - minuteToSoustract) < 0) {
-            soustractHour(1);
-            minute = Math.abs(minute - minuteToSoustract);
+            boolean isSoustractionPositive = soustractHour(1);
+            if (isSoustractionPositive) {
+                minute = 60 + minute - minuteToSoustract;
+            }
+            return isSoustractionPositive;
         } else {
             minute -= minuteToSoustract;
         }
+        return true;
     }
 
     /**
@@ -86,8 +98,10 @@ public class Duration {
      */
     private void soustractSecond(double secondToSoustract) {
         if ((second - secondToSoustract) < 0) {
-            soustractMinute(1);
-            second = 60 - Math.abs(second - secondToSoustract);
+            boolean isSoustractionPositive = soustractMinute(1);
+            if (isSoustractionPositive) {
+                second = 60 + second - secondToSoustract;
+            }
         } else {
             second -= secondToSoustract;
         }
@@ -148,6 +162,18 @@ public class Duration {
         } else {
             second += secondToAdd;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object dur) {
+        return this.hour == ((Duration) dur).getHour()
+                && this.minute == ((Duration) dur).getMinute()
+                && Objects.equals(this.second, ((Duration) dur).getSecond());
     }
 
     @Override

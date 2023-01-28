@@ -23,7 +23,7 @@ public class Sequence {
      *
      * @param outputTag  correspond au suffixe ajouté aux vidéos en sortie.
      * @param extension  de la vidéo en sortie.
-     * @param showOutput Permet d'afficher la sortie de la commande ffmepg.
+     * @param showOutput Permet d'afficher la sortie de la commande FFMpeg.
      */
     public void cut(String outputTag, String extension, boolean showOutput) {
         int indexOfDot = fileName.lastIndexOf('.');
