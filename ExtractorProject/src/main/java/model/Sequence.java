@@ -24,9 +24,8 @@ public class Sequence {
     /**
      * Permet de découper une séquence.
      *
-     * @param outputTag  correspond au suffixe ajouté aux vidéos en sortie.
-     * @param extension  de la vidéo en sortie.
-     * @param showOutput Permet d'afficher la sortie de la commande FFMpeg.
+     * @param outputTag correspond au suffixe ajouté aux vidéos en sortie.
+     * @param extension de la vidéo en sortie.
      */
     public void cut(String outputTag, String extension) throws ProcessBuilderException {
         int indexOfDot = fileName.lastIndexOf('.');
