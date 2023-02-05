@@ -125,11 +125,7 @@ public class Duration {
      * @param hourToAdd heures à ajouter.
      */
     private void addHour(int hourToAdd) {
-        if (hourToAdd + hour < 24) {
-            hour += hourToAdd;
-        } else {
-            System.err.println("Les heures dépasse 24 heures si on ajoute :" + hourToAdd);
-        }
+        hour += hourToAdd;
     }
 
     /**
@@ -165,15 +161,16 @@ public class Duration {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Duration duration = (Duration) o;
+        return hour == duration.hour && minute == duration.minute && Objects.equals(second, duration.second);
     }
 
     @Override
-    public boolean equals(Object dur) {
-        return this.hour == ((Duration) dur).getHour()
-                && this.minute == ((Duration) dur).getMinute()
-                && Objects.equals(this.second, ((Duration) dur).getSecond());
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override

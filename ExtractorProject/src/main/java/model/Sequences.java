@@ -1,5 +1,6 @@
 package model;
 
+import exception.ProcessBuilderException;
 import helper.BuilderHelper;
 import helper.FileHelper;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,8 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @Getter
 public class Sequences {
+
+    private final Logger logger = Logger.getLogger("Sequences");
 
     List<Sequence> trame;
 
@@ -26,10 +30,10 @@ public class Sequences {
      */
     public void initFromTextFile() {
         // Je récupère le contenu du fichier dans une chaine de caractères
-        String textFile = FileHelper.transformFileIntoString(Settings.extractedData);
+        String textFile = FileHelper.transformFileIntoString(Settings.EXTRACTED_DATA);
         // Je découpe la chaine par épisode.
         String[] fileSplitByEpisode = textFile.split("(?=ep\\d+\\.mp4:)");
-        Pattern pattern = Pattern.compile("(.*" + Settings.keyWord + ".*)|(.*" + Settings.prefixVideo + "\\d+\\." + Settings.extensionOfOrigineVideo + ":.*)", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("(.*" + Settings.KEY_WORD + ".*)|(.*" + Settings.PREFIX_VIDEO + "\\d+\\." + Settings.EXTENSION_OF_ORIGINE_VIDEO + ":.*)", Pattern.CASE_INSENSITIVE);
         for (String s : fileSplitByEpisode) {
             // Je découpe ligne par ligne.
             String[] episodeSplitByLine = s.split("\n");
@@ -60,15 +64,19 @@ public class Sequences {
 
     /**
      * Permet de couper l'ensemble des sequences.
-     *
-     * @param showOutput Affiche les sorties de la console des terminaux ouvert si à true.
      */
-    public void cutAll(Boolean showOutput) {
+    public void cutAll() {
         int compteur = 0;
         ExecutorService executor = Executors.newFixedThreadPool(1);
         for (Sequence s : trame) {
             int finalCompteur = compteur;
-            Runnable thread = () -> s.cut("_edit" + finalCompteur, ".mp4", showOutput);
+            Runnable thread = () -> {
+                try {
+                    s.cut("_edit" + finalCompteur, ".mp4");
+                } catch (ProcessBuilderException e) {
+                    logger.warning("" + e);
+                }
+            };
             executor.submit(thread);
             compteur++;
         }
@@ -94,23 +102,22 @@ public class Sequences {
      */
     public void setAmplitude(Duration d) {
         for (Sequence s : trame) {
-            s.startSequence.minus(d);
-            s.endSequence.plus(d);
+            s.getStartSequence().minus(d);
+            s.getEndSequence().plus(d);
         }
     }
 
     /**
      * Créer une vidéo contenant l'ensemble des vidéos découpée en une seule vidéo.
      */
-    public void concatAllOutPutFile() {
+    public void concatAllOutPutFile() throws ProcessBuilderException {
         StringBuilder content = new StringBuilder();
         for (String fileName : History.createdOutPutFiles) {
             content.append("file '").append(fileName).append("'\n");
         }
-        FileHelper.createOrReplaceExistingFile(Settings.directory + "/concatAllOutPutFileScript.txt", content.toString());
+        FileHelper.createOrReplaceExistingFile(Settings.DIRECTORY + "/concatAllOutPutFileScript.txt", content.toString());
         BuilderHelper.builderStart(new ProcessBuilder("cmd.exe", "/c", "ffmpeg", "-f", "concat", "-safe", "0", "-i", "concatAllOutPutFileScript.txt", "-c",
-                        "copy", "final.mp4")
-                , false);
+                "copy", "final.mp4"));
     }
 
 

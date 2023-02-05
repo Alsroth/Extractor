@@ -43,10 +43,8 @@ public class FileHelper {
      * @param content  Contenu à écrire dans le fichier.
      */
     public static void createOrReplaceExistingFile(String fileName, String content) {
-        try {
-            FileWriter fw = new FileWriter(fileName);
+        try (FileWriter fw = new FileWriter(fileName)) {
             fw.write(content);
-            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
